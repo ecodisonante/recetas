@@ -10,13 +10,13 @@ public class RecipeController {
 
     public static final String TITLE = "La Abuela Digital";
 
-    //TODO: Reemplazar por id dinammico
+    // TODO: Reemplazar por id dinammico
     @GetMapping("/recipe/1")
     public String home(
             @RequestParam(name = "name", required = false, defaultValue = TITLE) String name,
             Model model) {
-        model.addAttribute("name", name);
-        return "Recipe1";
+        model.addAttribute("content", "Recipe1"); // Se refiere al template login.html
+        return "layout"; // usar plantilla "layout.html" como base
     }
 
 }
