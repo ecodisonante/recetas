@@ -1,0 +1,35 @@
+<div class="text-center">
+    <!-- Nombre -->
+    <h1 th:text="${recipe.name}">Nombre de la receta</h1>
+    <!-- Pais -->
+    <p><strong>País:</strong> <span th:text="${recipe.country}">México</span></p>
+    <!-- Descripcion -->
+    <p th:text="${recipe.description}"></p>
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <!-- Imagen -->
+        <img class="w-100 p-5" th:src="@{${recipe.imageUrl}}" th:alt="${recipe.name}">
+    </div>
+
+    <div class="col-md-6 p-5">
+        <!-- Porciones -->
+        <p><strong>Porciones:</strong> <span th:text="${recipe.servings}"></span></p>
+        <!-- Dificultad -->
+        <p><strong>Dificultad:</strong> <span th:text="${recipe.dificulty}"></span></p>
+        <!-- Calificación -->
+        <p><strong>Calificación:</strong> <span th:text="${recipe.rate}"></span></p>
+        <!-- Ingredientes -->
+        <strong> Ingredientes </strong>
+        <ul>
+            <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}">Ingrediente</li>
+        </ul>
+        <!-- Preparación -->
+        <p>
+            <strong> Preparación: </strong>
+            <span th:text="${recipe.instructions}">Instrucciones para preparar la receta</span>
+        </p>
+    </div>
+</div>
