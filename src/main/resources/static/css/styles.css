@@ -1,4 +1,32 @@
-
-.recipe-img{
+.recipe-img {
     max-width: 450px;
+}
+
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.card-link {
+    text-decoration: none !important;
+    color: initial;
+}
+
+.card-link :hover {
+    text-decoration: none !important;
+    color: initial;
 }
