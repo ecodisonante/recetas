@@ -11,7 +11,7 @@
 
     <div class="col-md-6">
         <!-- Imagen -->
-        <img class="w-100 p-5" th:src="@{${recipe.imageUrl}}" th:alt="${recipe.name}">
+        <img class="w-100 p-5" th:src="@{|/img/recipe/${recipe.imageUrl}|}" th:alt="${recipe.name}">
     </div>
 
     <div class="col-md-6 p-5">
@@ -24,12 +24,12 @@
         <!-- Ingredientes -->
         <strong> Ingredientes </strong>
         <ul>
-            <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}">Ingrediente</li>
+            <li th:each="ingredient : ${recipe.ingredients}" th:text="|${ingredient.name}, ${ingredient.ammount}|">Ingrediente</li>
         </ul>
         <!-- Preparación -->
-        <p>
-            <strong> Preparación: </strong>
-            <span th:text="${recipe.instructions}">Instrucciones para preparar la receta</span>
-        </p>
+        <strong> Preparación: </strong>
+        <ul>
+            <li th:each="instruction : ${recipe.instructions}" th:text="|${instruction.step}. ${instruction.action}|">Preparacion</li>
+        </ul>
     </div>
 </div>
