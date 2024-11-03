@@ -1,4 +1,4 @@
-package com.ecodisonante.recetas.config;
+package com.abueladigital.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
+
+import com.abueladigital.frontend.config.CustomAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity

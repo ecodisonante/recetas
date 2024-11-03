@@ -1,4 +1,4 @@
-package com.ecodisonante.recetas.controller;
+package com.abueladigital.controller;
 
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -9,8 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ecodisonante.recetas.model.Recipe;
-import com.ecodisonante.recetas.service.RecipeService;
+import com.abueladigital.model.Recipe;
+import com.abueladigital.service.RecipeService;
+
 
 @Controller
 public class HomeController {

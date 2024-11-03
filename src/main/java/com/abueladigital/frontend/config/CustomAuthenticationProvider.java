@@ -1,4 +1,4 @@
-package com.ecodisonante.recetas.config;
+package com.abueladigital.frontend.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.ecodisonante.recetas.model.AuthRequest;
-import com.ecodisonante.recetas.model.TokenStorage;
+import com.abueladigital.model.AuthRequest;
+import com.abueladigital.model.TokenStorage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

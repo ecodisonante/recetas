@@ -1,4 +1,4 @@
-package com.ecodisonante.recetas.model;
+package com.abueladigital.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

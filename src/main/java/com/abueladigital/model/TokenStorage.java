@@ -1,4 +1,4 @@
-package com.ecodisonante.recetas.model;
+package com.abueladigital.model;
 
 import org.springframework.stereotype.Component;
 

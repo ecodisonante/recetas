@@ -1,4 +1,4 @@
-package com.ecodisonante.recetas.service;
+package com.abueladigital.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.ecodisonante.recetas.model.Recipe;
-import com.ecodisonante.recetas.model.TokenStorage;
+import com.abueladigital.model.Recipe;
+import com.abueladigital.model.TokenStorage;
 
 import java.util.List;
 
