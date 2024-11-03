@@ -3,30 +3,36 @@ package com.ecodisonante.recetas.controller;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ecodisonante.recetas.model.DataLoader;
 import com.ecodisonante.recetas.model.Recipe;
+import com.ecodisonante.recetas.service.RecipeService;
 
 @Controller
 public class HomeController {
 
+    @Autowired
+    private RecipeService service;
+
     public static final String TITLE = "La Abuela Digital";
 
-    @GetMapping(value = {"/", "/home"})
+    @GetMapping(value = { "/", "/home" })
     public String home(
             @RequestParam(name = "name", required = false, defaultValue = TITLE) String name,
             Model model) {
 
-        var latest = DataLoader.loadRecipes().stream()
-                .sorted(Comparator.comparing(Recipe::getCreatedAt).reversed())
+        var allRecipes = service.getAll();
+
+        var latest = allRecipes.stream()
+                .sorted(Comparator.comparing(Recipe::getCreated).reversed())
                 .limit(3)
                 .collect(Collectors.toList());
 
-        var popular = DataLoader.loadRecipes().stream()
+        var popular = allRecipes.stream()
                 .sorted(Comparator.comparing(Recipe::getRate).reversed())
                 .limit(3)
                 .collect(Collectors.toList());

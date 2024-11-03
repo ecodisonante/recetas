@@ -19,10 +19,10 @@
         <div class="col-md-4 p-5" th:each="recipe : ${latest}">
             <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="card-link">
                 <div class="card">
-                    <img th:src="${recipe.imageUrl}" class="card-img-top" th:alt="${recipe.name}">
+                    <img th:src="|/img/recipe/${recipe.imageUrl}|" class="card-img-top" th:alt="${recipe.name}">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${recipe.name}">Nombre de la receta</h5>
-                        <p class="card-text" th:text="${#temporals.format(recipe.createdAt, 'dd-MM-yyyy HH:mm')}"></p>
+                        <p class="card-text" th:text="${#temporals.format(recipe.created, 'dd-MM-yyyy HH:mm')}"></p>
                     </div>
                 </div>
             </a>
@@ -37,7 +37,7 @@
         <div class="col-md-4 p-5" th:each="recipe : ${popular}">
             <a th:href="@{/recipe/{id}(id=${recipe.id})}" class="card-link">
                 <div class="card">
-                    <img th:src="${recipe.imageUrl}" class="card-img-top" th:alt="${recipe.name}">
+                    <img th:src="|/img/recipe/${recipe.imageUrl}|" class="card-img-top" th:alt="${recipe.name}">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${recipe.name}">Nombre de la receta</h5>
                         <p class="card-text" th:text="'Calificación: ' + ${recipe.rate}"></p>
