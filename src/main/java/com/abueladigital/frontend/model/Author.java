@@ -1,4 +1,4 @@
-package com.abueladigital.model;
+package com.abueladigital.frontend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

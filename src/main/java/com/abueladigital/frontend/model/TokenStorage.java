@@ -1,4 +1,4 @@
-package com.abueladigital.model;
+package com.abueladigital.frontend.model;
 
 import org.springframework.stereotype.Component;
 
