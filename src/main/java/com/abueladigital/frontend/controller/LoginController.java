@@ -1,4 +1,4 @@
-package com.abueladigital.controller;
+package com.abueladigital.frontend.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;

@@ -1,4 +1,4 @@
-package com.abueladigital.config;
+package com.abueladigital.frontend.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
-
-import com.abueladigital.frontend.config.CustomAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -31,8 +29,10 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .headers(headers -> headers.contentSecurityPolicy(
+                        cps -> cps.policyDirectives("default-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'")))
                 .cors(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable)
+                // .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home", "/login").permitAll()

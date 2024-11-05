@@ -10,10 +10,10 @@ RUN mvn clean package
 
 FROM eclipse-temurin:21-jdk 
 
-COPY --from=buildstage /app/target/recetas-0.0.1-SNAPSHOT.jar /app/recetas.jar
+COPY --from=buildstage /app/target/frontend-0.0.2-SNAPSHOT.jar /app/frontend.jar
 EXPOSE 8080
 
-ENTRYPOINT [ "java", "-jar","/app/recetas.jar" ]
+ENTRYPOINT [ "java", "-jar","/app/frontend.jar" ]
 
 
 

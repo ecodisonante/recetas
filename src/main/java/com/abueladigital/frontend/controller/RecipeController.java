@@ -1,4 +1,4 @@
-package com.abueladigital.controller;
+package com.abueladigital.frontend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
