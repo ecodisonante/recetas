@@ -29,11 +29,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .headers(headers -> headers.contentSecurityPolicy(
-                        cps -> cps.policyDirectives("default-src 'self';"
-                                + "img-src 'self'; "
-                                + "script-src 'self' ;"
-                                + "style-src 'self' ;")))
+                // .headers(headers -> headers.contentSecurityPolicy(
+                //         cps -> cps.policyDirectives("default-src 'self';"
+                //                 + "img-src 'self'; "
+                //                 // + "script-src 'self' 'unsafe-inline';"
+                //                 + "style-src 'self' 'unsafe-inline';")))
                 .cors(AbstractHttpConfigurer::disable)
                 // .csrf(AbstractHttpConfigurer::disable)
 
