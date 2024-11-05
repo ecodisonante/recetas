@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.abueladigital.model.Recipe;
-import com.abueladigital.service.RecipeService;
+import com.abueladigital.frontend.model.Recipe;
+import com.abueladigital.frontend.service.RecipeService;
 
 
 @Controller
