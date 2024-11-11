@@ -1,6 +1,5 @@
 package com.abueladigital.frontend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +11,13 @@ import com.abueladigital.frontend.service.RecipeService;
 @Controller
 public class RecipeController {
 
-    @Autowired
+
     private RecipeService service;
 
+    public RecipeController(RecipeService service) {
+        this.service = service;
+    }
+    
     public static final String TITLE = "La Abuela Digital";
 
     @GetMapping("/recipe/{id}")

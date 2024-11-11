@@ -1,6 +1,5 @@
 package com.abueladigital.frontend.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +19,7 @@ public class RecipeService {
     private final RestTemplate restTemplate;
     private final TokenStorage tokenStorage;
 
-    @Autowired
+    //@Autowired
     public RecipeService(RestTemplate restTemplate, TokenStorage tokenStorage) {
         this.restTemplate = restTemplate;
         this.tokenStorage = tokenStorage;

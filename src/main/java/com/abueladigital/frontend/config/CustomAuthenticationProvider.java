@@ -3,7 +3,6 @@ package com.abueladigital.frontend.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,7 +31,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private TokenStorage tokenStorage;
 
-    @Autowired
     public CustomAuthenticationProvider(TokenStorage tokenStore) {
         super();
         this.tokenStorage = tokenStore;

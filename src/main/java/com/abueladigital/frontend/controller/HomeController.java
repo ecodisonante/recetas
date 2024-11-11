@@ -3,7 +3,6 @@ package com.abueladigital.frontend.controller;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +15,15 @@ import com.abueladigital.frontend.service.RecipeService;
 @Controller
 public class HomeController {
 
-    @Autowired
     private RecipeService service;
 
     public static final String TITLE = "La Abuela Digital";
 
-    @GetMapping(value = { "/", "/home" })
+    public HomeController(RecipeService service) {
+        this.service = service;
+}
+
+@GetMapping(value = { "/", "/home" })
     public String home(
             @RequestParam(name = "name", required = false, defaultValue = TITLE) String name,
             Model model) {
