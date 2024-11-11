@@ -1,6 +1,5 @@
 package com.abueladigital.frontend.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,43 +14,57 @@ import org.springframework.web.client.RestTemplate;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    @Autowired
+    //@Autowired
     CustomAuthenticationProvider authProvider;
+
+    public WebSecurityConfig(CustomAuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
+    }
+
+    private static String home = "home";
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http
                 .getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(authProvider);
+        authenticationManagerBuilder.authenticationProvider(this.authProvider);
         return authenticationManagerBuilder.build();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // .headers(headers -> headers.contentSecurityPolicy(
-                //         cps -> cps.policyDirectives("default-src 'self';"
-                //                 + "img-src 'self'; "
-                //                 // + "script-src 'self' 'unsafe-inline';"
-                //                 + "style-src 'self' 'unsafe-inline';")))
+                .headers(headers -> headers.contentSecurityPolicy(
+                    cps -> cps.policyDirectives("default-src 'self'; "
+                    + "img-src 'self'; "
+                    + "script-src 'self' 'unsafe-inline'; "
+                    + "style-src 'self' 'unsafe-inline'; "
+                    + "font-src 'self'; "
+                    + "media-src 'self'; "
+                    + "object-src 'none'; "
+                    + "base-uri 'self'; "
+                    + "form-action 'self'; "
+                    + "frame-ancestors 'self'; "
+                    + "connect-src 'self' http://localhost:8082;"))
+                    )
                 .cors(AbstractHttpConfigurer::disable)
                 // .csrf(AbstractHttpConfigurer::disable)
 
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/login").permitAll()
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/", "/"+home, "/login").permitAll()
                         .requestMatchers("/css/**.css").permitAll()
                         .requestMatchers("/img/**.jpg").permitAll()
                         .requestMatchers("/img/recipe/**.jpg").permitAll()
                         .anyRequest().authenticated())
 
-                .formLogin((form) -> form
+                .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .defaultSuccessUrl("/"+home, true)
                         .permitAll())
 
-                .logout((logout) -> logout
+                .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/home")
+                        .logoutSuccessUrl("/"+home)
                         .permitAll());
 
         return http.build();
