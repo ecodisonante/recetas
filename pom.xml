@@ -9,11 +9,11 @@
 		<version>3.3.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ecodisonante</groupId>
-	<artifactId>recetas</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>recetas</name>
-	<description>Demo project for Spring Boot</description>
+	<groupId>com.abueladigital</groupId>
+	<artifactId>frontend</artifactId>
+	<version>0.0.3-SNAPSHOT</version>
+	<name>La Abuela Digital</name>
+	<description>Proyecto para asignatura de Seguridad y Calidad en el Desarrollo de Software</description>
 	<url />
 	<licenses>
 		<license />
