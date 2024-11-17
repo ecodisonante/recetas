@@ -18,6 +18,7 @@ public class Recipe {
     private String country;
     private Integer dificulty;
     private String imageUrl;
+    private String videoUrl;
     private Double rate;
     private List<Ingredient> ingredients;
     private List<Instruction> instructions;
