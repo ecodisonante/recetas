@@ -48,6 +48,92 @@
     </div>
 </section>
 
+<!-- Validando si usuario esta autenticado podra realizar registro de receta -->
+<section sec:authorize="isAuthenticated()">
+    <div th:fragment="formReceta" class="container mt-5">
+        <div class="text-center">
+            <h1>Publicar una nueva receta</h1>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-8 col-sm-12 offset-md-2">
+                <form th:action="@{/recetas}" th:object="${Recipe}" method="POST" enctype="multipart/form-data">
+    
+                    <!-- Nombre de la Receta -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre de la receta</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                
+                    <!-- Descripción -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                
+                    <!-- Porciones -->
+                    <div class="mb-3">
+                        <label for="servings" class="form-label">Porciones</label>
+                        <input type="number" class="form-control" id="servings" name="servings" required>
+                    </div>
+                
+                    <!-- País -->
+                    <div class="mb-3">
+                        <label for="country" class="form-label">País</label>
+                        <input type="text" class="form-control" id="country" name="country" required>
+                    </div>
+                
+                    <!-- Dificultad -->
+                    <div class="mb-3">
+                        <label for="difficulty" class="form-label">Dificultad</label>
+                        <input type="number" class="form-control" id="difficulty" name="difficulty" min="1" max="5" required>
+                    </div>
+                
+                    <!-- URL de la Imagen -->
+                    <div class="mb-3">
+                        <label for="imageUrl" class="form-label">URL de la imagen</label>
+                        <input type="text" class="form-control" id="imageUrl" name="imageUrl">
+                    </div>
+                
+                    <!-- Calificación -->
+                    <div class="mb-3">
+                        <label for="rate" class="form-label">Calificación</label>
+                        <input type="number" class="form-control" id="rate" name="rate" step="0.1" min="0" max="5">
+                    </div>
+                
+                    <!-- Ingredientes -->
+                    <div class="mb-3">
+                        <label for="ingredients" class="form-label">Ingredientes</label>
+                        <input type="text" class="form-control" id="ingredients" name="ingredients">
+                    </div>
+                
+                    <!-- Instrucciones -->
+                    <div class="mb-3">
+                        <label for="instructions" class="form-label">Instrucciones</label>
+                        <input type="text" class="form-control" id="instructions" name="instructions">
+                    </div>
+                
+                    <!-- ID del Autor -->
+                    <div class="mb-3">
+                        <label for="authorId" class="form-label">ID del autor</label>
+                        <input type="number" class="form-control" id="authorId" name="authorId" required>
+                    </div>
+                
+                    <!-- Fecha de Creación -->
+                    <div class="mb-3">
+                        <label for="created" class="form-label">Fecha de creación</label>
+                        <input type="datetime-local" class="form-control" id="created" name="created">
+                    </div>
+                
+                    <!-- Botón de Envío -->
+                    <button type="submit" class="btn btn-primary mt-4 btn-block">Publicar receta</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <div class="p-4 w-100 bg-warning text-center">
     <h5> Pronto... publicidad aqui </h5>
