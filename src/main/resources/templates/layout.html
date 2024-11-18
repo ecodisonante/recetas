@@ -27,7 +27,7 @@
                     </li>
                     <!-- Receta1 - Página estática -->
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/recipe/1}">Receta</a>
+                        <a class="nav-link" th:href="@{/recipe}">Receta</a>
                     </li>
                     <!-- Login -->
                     <li class="nav-item" sec:authorize="isAnonymous()">
@@ -47,6 +47,8 @@
         <!-- This will render the dynamic content as passed by the controller -->
         <div th:replace="~{${content}}"></div>
     </div>
+
+    <div th:replace="~{Footer}"></div>
 
     <!-- Bootstrap JS -->
     <script th:src="@{/js/bootstrap.bundle.js}"></script>

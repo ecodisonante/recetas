@@ -4,6 +4,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -55,6 +56,30 @@ public class RecipeService {
                 Recipe.class);
 
         return response.getBody();
+    }
+
+    public Recipe postRecipe(Recipe recipe) {
+        String url = "http://localhost:8081/api/recipes";
+
+        HttpHeaders headers = new HttpHeaders();
+        String token = tokenStorage.getToken();
+        if (token != null) {
+            headers.set("Authorization", "Bearer " + token);
+        }
+
+        HttpEntity<Recipe> entity = new HttpEntity<>(recipe, headers);
+
+        ResponseEntity<Recipe> response = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                entity,
+                Recipe.class);
+
+        if (response.getStatusCode() == HttpStatus.CREATED) {
+            return response.getBody();
+        } else {
+            throw new RuntimeException("Failed to create recipe");
+        }
     }
 
 }
