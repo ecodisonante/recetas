@@ -1,5 +1,6 @@
 package com.abueladigital.frontend.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,9 +15,9 @@ import org.springframework.web.client.RestTemplate;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    //@Autowired
     CustomAuthenticationProvider authProvider;
 
+    @Autowired
     public WebSecurityConfig(CustomAuthenticationProvider authProvider) {
         this.authProvider = authProvider;
     }
@@ -35,23 +36,22 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .headers(headers -> headers.contentSecurityPolicy(
-                    cps -> cps.policyDirectives("default-src 'self'; "
-                    + "img-src 'self'; "
-                    + "script-src 'self' 'unsafe-inline'; "
-                    + "style-src 'self' 'unsafe-inline'; "
-                    + "font-src 'self'; "
-                    + "media-src 'self'; "
-                    + "object-src 'none'; "
-                    + "base-uri 'self'; "
-                    + "form-action 'self'; "
-                    + "frame-ancestors 'self'; "
-                    + "connect-src 'self' http://localhost:8082;"))
-                    )
+                        cps -> cps.policyDirectives("default-src 'self'; "
+                                + "img-src 'self'; "
+                                + "script-src 'self' https://cdn.jsdelivr.net; "
+                                + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+                                + "font-src 'self' http://themes.googleusercontent.com; "
+                                + "media-src 'self'; "
+                                + "object-src 'none'; "
+                                + "base-uri 'self'; "
+                                + "form-action 'self'; "
+                                + "frame-ancestors 'self'; "
+                                + "connect-src 'self' http://localhost:8081 http://backend:8081;")))
                 .cors(AbstractHttpConfigurer::disable)
                 // .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/"+home, "/login").permitAll()
+                        .requestMatchers("/", "/" + home, "/login").permitAll()
                         .requestMatchers("/css/**.css").permitAll()
                         .requestMatchers("/img/**.jpg").permitAll()
                         .requestMatchers("/img/recipe/**.jpg").permitAll()
@@ -59,12 +59,12 @@ public class WebSecurityConfig {
 
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/"+home, true)
+                        .defaultSuccessUrl("/" + home, true)
                         .permitAll())
 
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/"+home)
+                        .logoutSuccessUrl("/" + home)
                         .permitAll());
 
         return http.build();
