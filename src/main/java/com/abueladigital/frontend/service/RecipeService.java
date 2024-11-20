@@ -27,7 +27,7 @@ public class RecipeService {
     }
 
     public List<Recipe> getAll() {
-        String url = "http://localhost:8081/api/recipes";
+        String url = "http://backend:8081/api/recipes";
         ResponseEntity<List<Recipe>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
@@ -38,7 +38,7 @@ public class RecipeService {
     }
 
     public Recipe getById(long id) {
-        String url = String.format("http://localhost:8081/api/recipes/%d", id);
+        String url = String.format("http://backend:8081/api/recipes/%d", id);
 
         // agregar token al header
         HttpHeaders headers = new HttpHeaders();
@@ -59,7 +59,7 @@ public class RecipeService {
     }
 
     public Recipe postRecipe(Recipe recipe) {
-        String url = "http://localhost:8081/api/recipes";
+        String url = "http://backend:8081/api/recipes";
 
         HttpHeaders headers = new HttpHeaders();
         String token = tokenStorage.getToken();
