@@ -1,6 +1,8 @@
 package com.abueladigital.frontend.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,17 +21,18 @@ public class RecipeService {
 
     private final RestTemplate restTemplate;
     private final TokenStorage tokenStorage;
+    private final String baseUrl;
 
-    //@Autowired
-    public RecipeService(RestTemplate restTemplate, TokenStorage tokenStorage) {
+    @Autowired
+    public RecipeService(RestTemplate restTemplate, TokenStorage tokenStorage, Environment env) {
         this.restTemplate = restTemplate;
         this.tokenStorage = tokenStorage;
+        baseUrl = env.getProperty("backend.base.url") + "/api/recipes";
     }
 
     public List<Recipe> getAll() {
-        String url = "http://localhost:8081/api/recipes";
         ResponseEntity<List<Recipe>> response = restTemplate.exchange(
-                url,
+                baseUrl,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Recipe>>() {
@@ -38,7 +41,7 @@ public class RecipeService {
     }
 
     public Recipe getById(long id) {
-        String url = String.format("http://localhost:8081/api/recipes/%d", id);
+        String url = String.format("%s/%d", baseUrl, id);
 
         // agregar token al header
         HttpHeaders headers = new HttpHeaders();
@@ -59,8 +62,6 @@ public class RecipeService {
     }
 
     public Recipe postRecipe(Recipe recipe) {
-        String url = "http://localhost:8081/api/recipes";
-
         HttpHeaders headers = new HttpHeaders();
         String token = tokenStorage.getToken();
         if (token != null) {
@@ -70,7 +71,7 @@ public class RecipeService {
         HttpEntity<Recipe> entity = new HttpEntity<>(recipe, headers);
 
         ResponseEntity<Recipe> response = restTemplate.exchange(
-                url,
+                baseUrl,
                 HttpMethod.POST,
                 entity,
                 Recipe.class);

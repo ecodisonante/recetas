@@ -3,6 +3,8 @@ package com.abueladigital.frontend.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,10 +32,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private TokenStorage tokenStorage;
+    private final String baseUrl;
 
-    public CustomAuthenticationProvider(TokenStorage tokenStore) {
+    @Autowired
+    public CustomAuthenticationProvider(TokenStorage tokenStore, Environment env) {
         super();
         this.tokenStorage = tokenStore;
+        baseUrl = env.getProperty("backend.base.url") + "/api/auth/login";
     }
 
     @Override
@@ -52,7 +57,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             // Realizar la solicitud de autenticación al backend
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> responseEntity = restTemplate.postForEntity(
-                    "http://localhost:8081/api/auth/login",
+                    baseUrl,
                     requestEntity,
                     String.class);
 
