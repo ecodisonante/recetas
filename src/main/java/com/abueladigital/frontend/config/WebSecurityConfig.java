@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,6 +36,9 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(AbstractHttpConfigurer::disable)
+                // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
                 .headers(headers -> headers.contentSecurityPolicy(
                         cps -> cps.policyDirectives("default-src 'self'; "
                                 + "img-src 'self'; "
@@ -44,11 +48,9 @@ public class WebSecurityConfig {
                                 + "media-src 'self'; "
                                 + "object-src 'none'; "
                                 + "base-uri 'self'; "
-                                + "form-action 'self'; "
+                                + "form-action 'self' http://localhost:* http://backend:* http://48.211.162.254:*; "
                                 + "frame-ancestors 'self'; "
-                                + "connect-src 'self' http://localhost:8081 http://backend:8081;")))
-                .cors(AbstractHttpConfigurer::disable)
-                // .csrf(AbstractHttpConfigurer::disable)
+                                + "connect-src 'self' http://localhost:* http://backend:* http://48.211.162.254:*;")))
 
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/", "/" + home, "/login").permitAll()
@@ -65,7 +67,10 @@ public class WebSecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/" + home)
-                        .permitAll());
+                        .permitAll())
+
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)); // Usa sesiones cuando sea necesario
 
         return http.build();
     }
@@ -74,5 +79,24 @@ public class WebSecurityConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
+    // @Bean
+    // public CorsConfigurationSource corsConfigurationSource() {
+    // CorsConfiguration configuration = new CorsConfiguration();
+    // configuration.setAllowCredentials(true); // Permite el envío de cookies
+    // configuration.addAllowedOrigin("http://localhost:8082"); // Origen del
+    // frontend
+    // configuration.addAllowedOrigin("http://frontend:8082"); // Origen del
+    // frontend
+    // configuration.addAllowedOrigin("http://48.211.162.254:8082"); // Origen del
+    // frontend
+    // configuration.addAllowedMethod("*");
+    // configuration.addAllowedHeader("*");
+
+    // UrlBasedCorsConfigurationSource source = new
+    // UrlBasedCorsConfigurationSource();
+    // source.registerCorsConfiguration("/**", configuration);
+    // return source;
+    // }
 
 }
