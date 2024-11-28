@@ -41,7 +41,7 @@ public class WebSecurityConfig {
 
                 .headers(headers -> headers.contentSecurityPolicy(
                         cps -> cps.policyDirectives("default-src 'self'; "
-                                + "img-src 'self'; "
+                                + "img-src 'self' https://i.blogs.es;"
                                 + "script-src 'self' https://cdn.jsdelivr.net; "
                                 + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
                                 + "font-src 'self' http://themes.googleusercontent.com; "

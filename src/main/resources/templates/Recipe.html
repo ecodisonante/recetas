@@ -11,7 +11,7 @@
 
     <div class="col-md-6">
         <!-- Imagen -->
-        <img class="w-100 p-5" th:src="@{|/img/recipe/${recipe.imageUrl}|}" th:alt="${recipe.name}">
+        <img class="w-100 p-5" th:src="${recipe.imageUrl}" th:alt="${recipe.name}">
     </div>
 
     <div class="col-md-6 p-5">

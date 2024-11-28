@@ -65,7 +65,7 @@ public class RecipeService {
         HttpHeaders headers = new HttpHeaders();
         String token = tokenStorage.getToken();
         if (token != null) {
-            headers.set("Authorization", "Bearer " + token);
+            headers.setBearerAuth(token);
         }
 
         HttpEntity<Recipe> entity = new HttpEntity<>(recipe, headers);
