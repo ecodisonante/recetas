@@ -1,7 +1,6 @@
 package com.abueladigital.frontend.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,47 +17,42 @@ import com.abueladigital.frontend.model.Instruction;
 import com.abueladigital.frontend.model.Recipe;
 import com.abueladigital.frontend.service.RecipeService;
 
-
 @Controller
 public class RecipeController {
-
 
     private RecipeService service;
 
     public RecipeController(RecipeService service) {
         this.service = service;
     }
-    
+
     public static final String TITLE = "La Abuela Digital";
 
     @GetMapping("/recipe/{id}")
     public String getRecetaById(@PathVariable("id") Long id, Model model) {
-        
+
         // Buscar receta
         var recipe = service.getById(id);
 
         // Añadir la receta al modelo
         model.addAttribute("recipe", recipe);
-        model.addAttribute("content", "Recipe"); 
+        model.addAttribute("content", "Recipe");
 
         return "layout"; // usar plantilla "layout.html" como base
     }
 
-        @PostMapping("/recipe")
-    public String createRecipe(   
-        @RequestParam("name") String name,
-        @RequestParam("description") String description,
-        @RequestParam("servings") Integer servings,
-        @RequestParam("country") String country,
-        @RequestParam("difficulty") Integer difficulty,
-        @RequestParam("imageUrl") String imageUrl,
-        @RequestParam("rate") Double rate,
-        @RequestParam("ingredients") String ingredients,
-        @RequestParam("instructions") String instructions,
-        @RequestParam("authorId") Long authorId,
-        @RequestParam("created") String created,
-        Model model) {
-            
+    @PostMapping("/recipe")
+    public String createRecipe(
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("servings") Integer servings,
+            @RequestParam("country") String country,
+            @RequestParam("difficulty") Integer difficulty,
+            @RequestParam("imageUrl") String imageUrl,
+            @RequestParam("ingredients") String ingredients,
+            @RequestParam("instructions") String instructions,
+            Model model) {
+
         try {
             // Creando objeto receta
             Recipe recipe = new Recipe();
@@ -68,47 +62,38 @@ public class RecipeController {
             recipe.setCountry(country);
             recipe.setDificulty(difficulty);
             recipe.setImageUrl(imageUrl);
-            recipe.setRate(rate);
+            recipe.setRate(0D);
 
-            // agregando objeto ingredientes
-            List<Ingredient> ingredientList = Arrays.stream(ingredients.split(",")).map(ingredient -> {
-                String[] parts = ingredient.split(":");
-                if (parts.length != 2) {
-                    throw new IllegalArgumentException("Invalid ingredient format: " + ingredient);
-                }
-                Ingredient ing = new Ingredient();
-                ing.setName(parts[0].trim());
-                ing.setAmmount(parts[1].trim());
-                return ing;
-            })
+            // Agregando objeto ingredientes
+            List<Ingredient> ingredientList = Arrays.stream(ingredients.split("\n"))
+                    .map(ingredient -> {
+                        String[] parts = ingredient.split(":");
+                        if (parts.length != 2) {
+                            throw new IllegalArgumentException("Formato inválido para el ingrediente: " + ingredient);
+                        }
+                        Ingredient ing = new Ingredient();
+                        ing.setName(parts[0].trim());
+                        ing.setAmmount(parts[1].trim());
+                        return ing;
+                    })
                     .collect(Collectors.toList());
             recipe.setIngredients(ingredientList);
 
-            // agregando objeto intrucciones
-            List<Instruction> instructionList = Arrays.stream(instructions.split(",")).map(instruction -> {
-                        String[] parts = instruction.split(":");
-                        if (parts.length != 2) {
-                            throw new IllegalArgumentException("Invalid instruction format: " + instruction);
-                        }
-                        Instruction inst = new Instruction();
-                        inst.setStep(Integer.parseInt(parts[0].trim()));
-                        inst.setAction(parts[1].trim());
-                        return inst;
-                    })
-                    .collect(Collectors.toList());
+            // Agregando objeto instrucciones
+            List<Instruction> instructionList = new ArrayList<>();
+            String[] instructionLines = instructions.split("\n");
+            for (int i = 0; i < instructionLines.length; i++) {
+                Instruction inst = new Instruction();
+                inst.setStep(i + 1); // Número de paso generado automáticamente
+                inst.setAction(instructionLines[i].trim()); // Acción desde la línea del textarea
+                if (!inst.getAction().isEmpty())
+                    instructionList.add(inst);
+            }
             recipe.setInstructions(instructionList);
-
-            recipe.setAuthorId(authorId);
-
-            // Parse created date
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-            recipe.setCreated(LocalDateTime.parse(created, formatter));
-
-            System.out.println("Recipe object: " + recipe);
 
             Recipe createdRecipe = service.postRecipe(recipe);
 
-            return "redirect:/recipe/" + createdRecipe.getId();
+            return "redirect:/home";
 
         } catch (Exception e) {
             model.addAttribute("error", "Ocurrió un error al agregar la receta: " + e.getMessage());
@@ -122,7 +107,7 @@ public class RecipeController {
         model.addAttribute("title", "Publicar una nueva receta");
         model.addAttribute("content", "RecipeForm");
 
-        return "layout"; 
+        return "layout";
     }
 
 }
