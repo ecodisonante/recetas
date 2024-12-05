@@ -24,12 +24,23 @@
         <!-- Ingredientes -->
         <strong> Ingredientes </strong>
         <ul>
-            <li th:each="ingredient : ${recipe.ingredients}" th:text="|${ingredient.name}, ${ingredient.ammount}|">Ingrediente</li>
+            <li th:each="ingredient : ${recipe.ingredients}" th:text="|${ingredient.name}, ${ingredient.ammount}|">
+                Ingrediente</li>
         </ul>
         <!-- Preparación -->
         <strong> Preparación: </strong>
         <ul>
-            <li th:each="instruction : ${recipe.instructions}" th:text="|${instruction.step}. ${instruction.action}|">Preparacion</li>
+            <li th:each="instruction : ${recipe.instructions}" th:text="|${instruction.step}. ${instruction.action}|">
+                Preparacion</li>
         </ul>
+    </div>
+
+
+    <div class="col-12 px-5">
+        <strong> Comentarios </strong>
+        <div th:each="comment : ${recipe.comments}">
+            <p class="mb-0 pb-0" th:text="${#temporals.format(comment.created, 'dd-MM-yyyy HH:mm')}"> Fecha </p>
+            <span class="card bg-light p-3 mb-4" th:text="${comment.content}"> Comentario </span>
+        </div>
     </div>
 </div>

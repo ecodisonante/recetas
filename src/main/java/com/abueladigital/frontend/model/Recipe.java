@@ -22,6 +22,7 @@ public class Recipe {
     private Double rate;
     private List<Ingredient> ingredients;
     private List<Instruction> instructions;
+    private List<Comments> comments;
     private Long authorId;
     private LocalDateTime created;
 
