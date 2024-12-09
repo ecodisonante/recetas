@@ -7,7 +7,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
@@ -36,7 +35,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                //.csrf(AbstractHttpConfigurer::disable)
                 // .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 .headers(headers -> headers.contentSecurityPolicy(
@@ -79,24 +78,4 @@ public class WebSecurityConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
-
-    // @Bean
-    // public CorsConfigurationSource corsConfigurationSource() {
-    // CorsConfiguration configuration = new CorsConfiguration();
-    // configuration.setAllowCredentials(true); // Permite el envío de cookies
-    // configuration.addAllowedOrigin("http://localhost:8082"); // Origen del
-    // frontend
-    // configuration.addAllowedOrigin("http://frontend:8082"); // Origen del
-    // frontend
-    // configuration.addAllowedOrigin("http://48.211.162.254:8082"); // Origen del
-    // frontend
-    // configuration.addAllowedMethod("*");
-    // configuration.addAllowedHeader("*");
-
-    // UrlBasedCorsConfigurationSource source = new
-    // UrlBasedCorsConfigurationSource();
-    // source.registerCorsConfiguration("/**", configuration);
-    // return source;
-    // }
-
 }

@@ -1,6 +1,8 @@
 package com.abueladigital.frontend.config;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,10 +13,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-
+import org.springframework.security.core.Authentication;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
 
 import com.abueladigital.frontend.model.TokenStorage;
 
@@ -50,16 +51,19 @@ class CustomAuthenticationProviderTest {
         // Datos de entrada simulados
         String username = "juan@test.com";
         String password = "Secret123";
-
-        // Simulamos RestTemplate para lanzar una RestClientException (simulando que el servicio no está disponible)
+    
+        // Configuramos RestTemplate para lanzar una RestClientException simulando un error del servicio
         when(restTemplate.postForEntity(eq(baseUrl), any(HttpEntity.class), eq(String.class)))
                 .thenThrow(new RestClientException("Service unavailable"));
-
-        // Llamamos al método authenticate y esperamos que se lance una excepción
-        assertThrows(AuthenticationServiceException.class, () -> {
-            authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        });
-    }
+    
+        // Simulamos la autenticación
+        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+    
+        // Verificamos que el método authenticate lanza una AuthenticationServiceException
+        assertThrows(AuthenticationServiceException.class, 
+                     () -> authenticationProvider.authenticate(authentication),
+                     "Expected AuthenticationServiceException due to service error");
+    }    
 
     // Test para verificar si se lanza una excepción cuando hay un error al procesar el JSON
     @Test
@@ -77,9 +81,12 @@ class CustomAuthenticationProviderTest {
                 .thenReturn(mockResponse);
 
         // Llamamos al método authenticate y esperamos que se lance una excepción
-        assertThrows(AuthenticationServiceException.class, () -> {
-            authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        });
+        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+    
+        // Verificamos que el método authenticate lanza una AuthenticationServiceException
+        assertThrows(AuthenticationServiceException.class, 
+                     () -> authenticationProvider.authenticate(authentication),
+                     "Expected AuthenticationServiceException due to service error");
     }
 
     // Test para verificar que el proveedor de autenticación soporta el tipo UsernamePasswordAuthenticationToken

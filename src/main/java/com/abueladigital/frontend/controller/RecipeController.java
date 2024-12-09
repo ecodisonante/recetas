@@ -76,7 +76,7 @@ public class RecipeController {
                         ing.setAmmount(parts[1].trim());
                         return ing;
                     })
-                    .collect(Collectors.toList());
+                    .toList();
             recipe.setIngredients(ingredientList);
 
             // Agregando objeto instrucciones
@@ -91,7 +91,7 @@ public class RecipeController {
             }
             recipe.setInstructions(instructionList);
 
-            Recipe createdRecipe = service.postRecipe(recipe);
+            service.postRecipe(recipe);
 
             return "redirect:/home";
 

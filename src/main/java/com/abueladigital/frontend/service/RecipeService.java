@@ -79,7 +79,17 @@ public class RecipeService {
         if (response.getStatusCode() == HttpStatus.CREATED) {
             return response.getBody();
         } else {
-            throw new RuntimeException("Failed to create recipe");
+            throw new RecipeCreationException("Failed to create recipe");
+        }
+    }
+
+    public static class RecipeCreationException extends RuntimeException {
+        public RecipeCreationException(String message) {
+            super(message);
+        }
+
+        public RecipeCreationException(String message, Throwable cause) {
+            super(message, cause);
         }
     }
 
