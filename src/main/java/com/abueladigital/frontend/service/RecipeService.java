@@ -87,10 +87,6 @@ public class RecipeService {
         public RecipeCreationException(String message) {
             super(message);
         }
-
-        public RecipeCreationException(String message, Throwable cause) {
-            super(message, cause);
-        }
     }
 
 }
